@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package hivers;
+
 import java.util.function.Supplier;
 
 public final class Singleton<PROVIDED_T, VALUE_T extends PROVIDED_T> extends AbstractProvider<PROVIDED_T> {

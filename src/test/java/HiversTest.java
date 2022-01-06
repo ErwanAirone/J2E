@@ -1,3 +1,4 @@
+import hivers.*;
 import org.junit.Test;
 
 public class HiversTest {
@@ -35,15 +36,15 @@ public class HiversTest {
         hivers.instanceOf(TestService.class).orElseThrow().ping();
         hivers.pop();
 
-        // Extension
-        /*hivers.push(new DefaultScope());
+        // hivers.Extension
+        hivers.push(new DefaultScope());
         hivers.register(new RestHivers());
         hivers.extension(RestHivers.class)
                 .register(RestHivers.Method.GET, "/hello", context -> context.response(200, "Hello, world!"))
                 .register(RestHivers.Method.DELETE, "/", context -> {
                     hivers.extension(RestHivers.class).shutdown();
                     context.response(204); })
-                .start();*/
+                .start();
     }
 
 
@@ -86,5 +87,4 @@ public class HiversTest {
             return result;
         }
     }
-
 }

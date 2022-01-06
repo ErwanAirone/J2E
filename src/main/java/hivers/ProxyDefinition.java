@@ -1,3 +1,5 @@
+package hivers;
+
 import java.lang.reflect.Method;
 
 public record ProxyDefinition(Runnable onInit,

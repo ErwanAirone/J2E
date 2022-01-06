@@ -1,10 +1,11 @@
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Stack;
+package hivers;
+
+import java.util.*;
 
 public class Hivers {
 
     private ArrayList<ScopeInterface> scopeList = new ArrayList<>();
+    private final Map<Class<? extends Extension>, Extension> extensionMap = new HashMap();
 
     public Hivers() {
         scopeList.add(new DefaultScope());
@@ -35,5 +36,14 @@ public class Hivers {
 
     public <T> Optional<T> instanceOf(Class<T> providerClass) {
         return Optional.ofNullable(scopeList.get(scopeList.size() - 1).getProvider(providerClass));
+    }
+
+    public void register(Extension extension)
+    {
+        extensionMap.put(extension.getClass(), extension);
+    }
+    public <T extends Extension> T extension(Class<T> extensionClass)
+    {
+        return (T) extensionMap.get(extensionClass);
     }
 }

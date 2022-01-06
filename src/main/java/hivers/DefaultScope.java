@@ -1,3 +1,5 @@
+package hivers;
+
 import java.util.ArrayList;
 
 public class DefaultScope implements ScopeInterface {
