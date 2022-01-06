@@ -10,8 +10,9 @@ public class Hivers {
         scopeList.add(new DefaultScope());
     }
 
-    public void provider(Provider provider){
+    public Provider provider(Provider provider){
         scopeList.get(scopeList.size() - 1).addProvider(provider);
+        return provider;
     }
 
     public <T> T instanceOfOrThrow(Class<T> providerClass) {
@@ -32,7 +33,7 @@ public class Hivers {
         scopeList.remove(scopeList.size() - 1);
     }
 
-    public <T> T instanceOf(Class<T> providerClass) {
-        return scopeList.get(scopeList.size() - 1).getProvider(providerClass);
+    public <T> Optional<T> instanceOf(Class<T> providerClass) {
+        return Optional.ofNullable(scopeList.get(scopeList.size() - 1).getProvider(providerClass));
     }
 }

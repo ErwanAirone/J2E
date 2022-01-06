@@ -1,32 +1,32 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 
-public final class Singleton<T> implements Provider {
+public final class Singleton<PROVIDED_T, VALUE_T extends PROVIDED_T> extends AbstractProvider<PROVIDED_T> {
 
-    private T instance;
+    private PROVIDED_T instance;
+    private final Supplier<VALUE_T> supplier;
 
-    private Supplier<T> supplier;
-    private Class<T> serviceClass;
+    public Singleton(Class<PROVIDED_T> boundClass, Supplier<VALUE_T> supplier) {
+        super(boundClass);
+        this.supplier = supplier;
+    }
+
+    public Singleton(Class<PROVIDED_T> boundClass, VALUE_T instance) {
+        this(boundClass, () -> instance);
+    }
 
     @Override
-    public T Instantiate(){
+    public PROVIDED_T instantiate(){
         if (instance == null) {
-            instance = supplier.get();
+            instance = getProxy(supplier.get());
         }
         return instance;
     }
 
     @Override
-    public Class<T> ProviderClass(){
-        return serviceClass;
-    }
-
-    public Singleton(Class<T> serviceClass, Supplier<T> supplier) {
-        this.serviceClass = serviceClass;
-        this.supplier = supplier;
-    }
-
-    public Singleton(Class<T> serviceClass, T instance) {
-        this.serviceClass = serviceClass;
-        this.instance = instance;
+    public Class<PROVIDED_T> providerClass(){
+        return boundClass;
     }
 }

@@ -10,8 +10,8 @@ public class DefaultScope implements ScopeInterface {
 
     public <T> T getProvider(Class<T> providerClass) {
         for (Provider provider : providers) {
-            if (provider.ProviderClass() == providerClass) {
-                var providerInstance = provider.Instantiate();
+            if (provider.providerClass() == providerClass) {
+                var providerInstance = provider.instantiate();
                 return (T) providerInstance;
             }
         }

@@ -1,4 +1,5 @@
 public interface Provider<T> {
-    public T Instantiate();
-    public Class<T> ProviderClass();
+    <VALUE_T extends T> VALUE_T instantiate();
+    Class<T> providerClass();
+    Provider<T> withProxies(final ProxyDefinition...proxies);
 }
