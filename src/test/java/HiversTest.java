@@ -1,7 +1,5 @@
 import org.junit.Test;
 
-import java.util.function.Function;
-
 public class HiversTest {
 
     @Test
@@ -11,7 +9,7 @@ public class HiversTest {
         final var hivers = new Hivers();
 
         // Add providers
-        hivers.provider(new Prototype<TestService>(TestService.class, PingService::new));
+        hivers.provider(new Prototype<>(TestService.class, PingService::new));
         hivers.provider(new Prototype<>(Nested.class, () -> new Nested(hivers.instanceOfOrThrow(TestService.class))));
         hivers.provider(new Singleton<>(Nested.class, new Nested(hivers.instanceOfOrThrow(TestService.class))));
 
@@ -24,7 +22,7 @@ public class HiversTest {
         hivers.provider(new Singleton<>(TestService.class, new PongService()));
         times(3, () -> System.out.println(hivers.instanceOfOrThrow(TestService.class)));
 
-        /*hivers.instanceOf(TestService.class).orElseThrow().ping();
+        hivers.instanceOf(TestService.class).orElseThrow().ping();
 
         // Pop scope and test instance resolution
         hivers.pop();
@@ -32,13 +30,13 @@ public class HiversTest {
 
         // Aspects
         hivers.push(new DefaultScope());
-        /*hivers.provider(new Singleton<>(TestService.class, new PongService()))
-                .withProxies(Proxy.around("ping", new LoggerAspect()), Proxy.init(() -> System.out.println("Service init.")));
+        hivers.provider(new Singleton<>(TestService.class, new PongService()))
+                .withProxies(ProxyDefinition.around("ping", new LoggerAspect()), ProxyDefinition.init(() -> System.out.println("Service init.")));
         hivers.instanceOf(TestService.class).orElseThrow().ping();
         hivers.pop();
 
         // Extension
-        hivers.push(new DefaultScope());
+        /*hivers.push(new DefaultScope());
         hivers.register(new RestHivers());
         hivers.extension(RestHivers.class)
                 .register(RestHivers.Method.GET, "/hello", context -> context.response(200, "Hello, world!"))
@@ -75,6 +73,17 @@ public class HiversTest {
 
         public Nested(final TestService testService) {
             this.testService = testService;
+        }
+    }
+    public static class LoggerAspect implements ProxyDefinition.AroundAspect
+    {
+        @Override
+        public Object invokeProxy(ProxyDefinition.Context context) throws Throwable
+        {
+            System.out.println("Before invocation");
+            var result = context.method().invoke(context.proxy(), context.args());
+            System.out.println("After invocation");
+            return result;
         }
     }
 
