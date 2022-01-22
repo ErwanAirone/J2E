@@ -1,10 +1,10 @@
 package hivers;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.lang.reflect.Proxy;
 
 public abstract class AbstractProvider<PROVIDED_T> implements Provider<PROVIDED_T> {
     
