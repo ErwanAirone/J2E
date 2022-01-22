@@ -1,6 +1,0 @@
-hivers\Provider.class
-hivers\ProxyDefinition.class
-hivers\AbstractProvider.class
-hivers\Singleton.class
-hivers\ProxyDefinition$AroundAspect.class
-hivers\ProxyDefinition$Context.class
